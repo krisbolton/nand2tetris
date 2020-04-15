@@ -1,0 +1,38 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Not.hdl
+
+/**
+  NOT gate:
+  out = not in
+ 
+        NOT
+   Input | Output   
+  -------|-------
+     0   |   1 
+     1   |   0 
+ 
+  I struggled with this for a bit, despite it working. How is a NAND a NOT?                    
+  I was thinking of this file in isolation. See And.hdl:                        
+                                         
+    Inputs      NAND    New inputs   NAND                               
+    A | B                              
+   ---|---                                  
+    0 | 0        1        1 | 1        0   
+    0 | 1   ->   1   ->   1 | 1   ->   0   
+    1 | 0        1        1 | 1        0
+    1 | 1        0        0 | 0        1
+              
+   Two NANDs make a NOT.                  
+ */
+
+CHIP Not {
+    IN in;
+    OUT out;
+
+    PARTS:
+    Nand(a=in, b=in, out=out);
+}
+
+
