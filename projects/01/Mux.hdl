@@ -1,0 +1,50 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Mux.hdl
+
+/** 
+  Multiplexor (selector):
+  out = a if sel == 0
+        b otherwise
+ 
+                            
+    a  |  b  | sel | out    notSelAndA |  selAndB  
+   ----|-----|-----|-----   -----------|---------
+    0  |  0  |  0  |  0         0      |     0         
+    0  |  1  |  0  |  0         0      |     0         
+    1  |  0  |  0  |  1         1      |     0         
+    1  |  1  |  0  |  1         1      |     0         
+    0  |  0  |  1  |  0         0      |     0         
+    0  |  1  |  1  |  1         0      |     1         
+    1  |  0  |  1  |  0         0      |     0         
+    1  |  1  |  1  |  1         0      |     1                                   
+
+  Chip diagram:
+                              
+          sel                      
+         __|__                     
+    a --|     |                         
+        |     |-- out                        
+    b --|_____|                            
+                                                                                            
+                                                                        
+ */
+
+CHIP Mux {
+    IN a, b, sel;
+    OUT out;
+
+    PARTS:
+    	 //set notSel as inverse of sel
+         Not(in=sel, out=notSel);
+
+         //compare value of input a to notSel, store result as notSelAndA
+         And(a=a, b=notSel, out=notSelAndA);
+
+         //compare value of input b to sel, store result as selAndB
+         And(a=b, b=sel, out=selAndB);
+
+         //compare comparisons, notSelAndA to selAndB
+         Or(a=notSelAndA, b=selAndB, out=out);
+}
